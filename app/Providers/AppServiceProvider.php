@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Illuminate\Contracts\Debug\ExceptionHandler;
+use App\Exceptions\UnknownSourceException;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -26,7 +27,8 @@ class AppServiceProvider extends ServiceProvider
                 'App\Contracts\Services\Api\TransactionApi',
                 'App\Services\Api\CSVSourceApi'
             );
-        //TODO Throw an exception
+        else
+            throw new UnknownSourceException();
     }
 
     /**

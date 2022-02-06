@@ -4,6 +4,7 @@ namespace App\Services\Api;
 
 use App\Contracts\Services\Api\TransactionApi;
 use Illuminate\Support\Facades\Storage;
+use App\Exceptions\CSVNotFoundException;
 
 final class CSVSourceApi implements TransactionApi
 {
@@ -13,7 +14,7 @@ final class CSVSourceApi implements TransactionApi
         $delimiter = ',';
 
 		if (!file_exists($csvPath) || !is_readable($csvPath))
-			return []; //TODO Throw an exception (csv file not found)
+            throw new CSVNotFoundException();
 		$header = NULL;
 		$data = array();
 		if (($handle = fopen($csvPath, 'r')) !== FALSE) {
